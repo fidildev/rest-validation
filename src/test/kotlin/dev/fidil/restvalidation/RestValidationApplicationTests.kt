@@ -35,4 +35,14 @@ class RestValidationApplicationTests {
             .andExpect(status().isOk)
     }
 
+    @Test
+    fun `when a CreateItem command with an invalid description is received then it returns a 400`() {
+        mockMvc.perform(post("/")
+            .content(objectMapper.writeValueAsString(testFixture.createItemWithInvalidDescription()))
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+    }
 }
